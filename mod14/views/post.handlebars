@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{post.title}} - My Blog</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {{#if logged_in}}
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {{else}}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <h1>{{post.title}}</h1>
+            <p>Posted by {{post.user.username}} on {{post.date_created}}</p>
+            <p>{{post.content}}</p>
+        </article>
+
+        <section>
+            <h2>Comments</h2>
+            {{#each post.comments as |comment|}}
+            <div class="comment">
+                <p><strong>{{comment.user.username}}</strong> said on {{comment.date_created}}:</p>
+                <p>{{comment.content}}</p>
+            </div>
+            {{/each}}
+
+            {{#if logged_in}}
+            <form action="/api/comments" method="post">
+                <textarea name="content" placeholder="Add a comment" required></textarea>
+                <input type="hidden" name="post_id" value="{{post.id}}">
+                <button type="submit">Submit</button>
+            </form>
+            {{else}}
+            <p><a href="/login">Login</a> to leave a comment.</p>
+            {{/if}}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 My Blog</p>
+    </footer>
+</body>
+
+</html>

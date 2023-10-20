@@ -1,0 +1,8 @@
+<h1>Welcome to My Blog</h1>
+{{#each posts as |post|}}
+<article>
+    <h2><a href="/post/{{post.id}}">{{post.title}}</a></h2>
+    <p>Posted by {{post.user.username}} on {{post.date_created}}</p>
+    <p>{{post.content}}</p>
+</article>
+{{/each}}
